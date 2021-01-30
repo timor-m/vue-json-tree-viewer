@@ -8,6 +8,8 @@
 
 
 
+
+
 ## Installation
 
 Install the plugin with npm:
@@ -23,7 +25,9 @@ import JsonTreeViewer from "vue-json-tree-viewer"
 Vue.use(JsonTreeViewer)
 ~~~
 
-##Usage
+
+
+## Usage
 
 Use in your Vue component.
 
@@ -35,7 +39,7 @@ Use in your Vue component.
     />
 </div>
 ~~~
-##Props
+## Props
 
 ##### `viewData `
 
@@ -76,7 +80,7 @@ Options Detail:
 
 :x:editable json tree data(feature)
 
-##Event
+## Event
 
 ##### `update` 
 
