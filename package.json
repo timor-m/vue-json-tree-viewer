@@ -1,7 +1,7 @@
 {
   "name": "vue-json-tree-viewer",
-  "version": "1.0.0",
-  "description": "json tree viewer component!",
+  "version": "1.0.1",
+  "description": "json tree viewer component,Customized color matching can be realized.",
   "author": "timor-m@foxmail.com",
   "keywords": [
     "vue.js",
