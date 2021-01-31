@@ -4,6 +4,7 @@
       :is="renderComponent"
       :treeNode="treeNode"
       :options="options"
+      :current-depth="currentDepth"
       />
   </div>
 </template>
@@ -12,16 +13,14 @@
 import renderComponentMaps from './render'
 export default {
   name: 'JsonTreeViewItem',
-  model: {
-    prop: 'treeNode'
-  },
-  props: ['treeNode', 'options'],
+  props: ['treeNode', 'options', 'currentDepth'],
   data () {
     return {
       renderComponent: null
     }
   },
   created () {
+    console.log(this.treeNode)
     this.renderComponent = renderComponentMaps[this.treeNode.type]
   }
 }

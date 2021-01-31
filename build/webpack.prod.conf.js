@@ -22,7 +22,14 @@ const webpackConfig = merge(baseWebpackConfig, {
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env
-    }),
+    })
+  ],
+  externals: {
+    vue: 'Vue'
+  },
+})
+if (config.build.min) {
+  webpackConfig.plugins.push(
     new UglifyJsPlugin({
       uglifyOptions: {
         compress: {
@@ -32,8 +39,8 @@ const webpackConfig = merge(baseWebpackConfig, {
       sourceMap: config.build.productionSourceMap,
       parallel: true
     })
-  ]
-})
+  )
+}
 
 if (config.build.productionGzip) {
   const CompressionWebpackPlugin = require('compression-webpack-plugin')

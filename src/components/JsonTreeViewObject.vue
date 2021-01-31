@@ -1,8 +1,14 @@
 <template>
   <div class="json-tree-item-leaf">
       <div class="json-tree-item-node" :class="{opened:isOpen}">
-         <span class="json-tree-item-key" @click="toggle" :class="`json-tree-item-key-${keyClassName}`">{{key}}:</span>
-         <span class="json-tree-item-hint" v-if="!isOpen">{{len}} {{property}}</span>
+         <span class="json-tree-item-key"
+          @click="toggle" :class="`json-tree-item-key-${keyClassName}`"
+          :style="{
+             color:options.styles.key[keyClassName]
+             }">{{key}}:</span>
+         <span class="json-tree-item-hint" v-if="isShowHint">{{len}} {{property}}</span>
+         <span v-if="!isOpen && !isShowHint && treeNode.type=='object'" class="json-tree-item-ellipsis">{<i @click="toggle">...</i>}</span>
+         <span v-if="!isOpen && !isShowHint && treeNode.type=='array'" class="json-tree-item-ellipsis">[<i @click="toggle">...</i>]</span>
       </div>
       <div v-if="isOpen">
         <JsonTreeViewItem
@@ -10,6 +16,7 @@
       :key="childNode.key"
       :treeNode="childNode"
       :options="options"
+      :current-depth="currentDepth+1"
       />
       </div>
   </div>
@@ -19,7 +26,7 @@
 import {getKey} from '../utils'
 export default {
   name: 'JsonTreeViewObject',
-  props: ['treeNode', 'options'],
+  props: ['treeNode', 'options', 'currentDepth'],
   data () {
     return {
       key: '',
@@ -37,15 +44,29 @@ export default {
     toggle () {
       this.isOpen = !this.isOpen
       this.treeNode.isOpen = this.isOpen
+      this.treeNode.init = true
     }
   },
   created () {
-    this.isOpen = this.treeNode.isOpen
-    this.key = getKey(this.treeNode)
-    this.len = this.treeNode.children.length
-    const unit = this.unit[this.treeNode.type]
-    this.property = this.len > 1 ? unit[1] : unit[0]
+    if (!this.treeNode.init) {
+      this.isOpen = this.treeNode.isOpen && this.currentDepth < this.options.defaultOpenDepth
+    } else {
+      this.isOpen = this.treeNode.isOpen
+    }
+
+    if (this.options.hints) {
+      this.unit = this.options.hints
+      this.len = this.treeNode.children.length
+      const unit = this.unit[this.treeNode.type]
+      this.property = this.len > 1 ? unit[1] : unit[0]
+    }
+    this.key = getKey(this.treeNode, this.options.keyNameQuote)
     this.keyClassName = isNaN(this.treeNode.key) ? typeof this.treeNode.key : 'number'
+  },
+  computed: {
+    isShowHint () {
+      return !this.isOpen && this.options.hints
+    }
   }
 }
 </script>
@@ -64,6 +85,8 @@ export default {
       &::before{
         content: "";
         position: absolute;
+        top: 3px;
+        left: -16px;
         width: 1px;
         height: 0;
         border: 10px solid transparent;
@@ -71,8 +94,6 @@ export default {
         border-width: 10px 8px;
         border-radius: 3px;
         overflow: hidden;
-        top: 5px;
-        left: -16px;
         color: #555;
         font-size: 12px;
         transform-origin: center 5px;
@@ -81,10 +102,25 @@ export default {
       }
     }
     &.opened .json-tree-item-key::before{
-        transform: scale(0.8) rotate(0);
+        transform: scale(0.7) rotate(0);
       }
     .json-tree-item-hint{
       color: #ddd;
+    }
+    .json-tree-item-ellipsis{
+      i{
+        display: inline-block;
+        height: 14px;
+        line-height: 7px;
+        background-color: #f9f9f9;
+        color: orangered;
+        letter-spacing: -2px;
+        border-radius: 3px;
+        vertical-align: middle;
+        padding: 0 3px;
+        margin: 0 5px;
+        cursor: pointer;
+      }
     }
   }
 }

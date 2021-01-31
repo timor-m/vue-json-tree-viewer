@@ -1,7 +1,16 @@
 <template>
   <div class="json-tree-view-base">
-    <span class="json-tree-view-base-key" :class="`json-tree-view-base-key-${keyClassName}`">{{key}}:</span>
-    <span class="json-tree-view-base-value" :class="`json-tree-view-base-value-${valueClassName}`" v-html="value"></span>
+    <span class="json-tree-view-base-key" :class="`json-tree-view-base-key-${keyClassName}`"
+    :style="{
+      color:options.styles.key[keyClassName]
+    }"
+    >{{key}}:</span>
+    <span class="json-tree-view-base-value" :class="`json-tree-view-base-value-${valueClassName}`"
+     v-html="value"
+     :style="{
+       color:options.styles.value[valueClassName]
+     }"
+     ></span>
   </div>
 </template>
 
@@ -27,8 +36,8 @@ export default {
     }
   },
   created () {
-    this.key = getKey(this.treeNode)
-    this.value = getValue(this.treeNode, this.options.parseLink)
+    this.key = getKey(this.treeNode, this.options.keyNameQuote)
+    this.value = getValue(this.treeNode, this.options)
     this.valueClassName = this.getClassName()
     this.keyClassName = isNaN(this.treeNode.key) ? typeof this.treeNode.key : 'number'
   },
@@ -61,6 +70,18 @@ export default {
       }
       &.json-tree-view-base-value-boolean{
         color: #0d22aa;
+      }
+       &.json-tree-view-base-value-function{
+        color: #067bca;
+      }
+       &.json-tree-view-base-value-null{
+        color: #e08331;
+      }
+       &.json-tree-view-base-value-undefined{
+        color: #e08331;
+      }
+      a{
+        color: #0366d6;
       }
     }
   }

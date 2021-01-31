@@ -2,9 +2,8 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Test from './Test'
-import JsonTreeViewer from "@/main"
-
-Vue.use(JsonTreeViewer);
+import JsonTreeViewer from '@/main'
+Vue.use(JsonTreeViewer)
 
 Vue.config.productionTip = false
 
