@@ -21,8 +21,9 @@
   "files":[
     "README.md",
     "dist",
-    "demo",
-    "demo.jpg"
+    "example",
+    "example-preview",
+    "preview.jpg"
   ],
   "devDependencies": {
     "vue": "^2.5.2",
