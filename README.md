@@ -41,7 +41,7 @@ Configuration related parameters
 
 See at:
 
-```json
+```js
 {
   defaultOpen: true, // default extend
   rootKeyName: 'root', // root key name
@@ -83,7 +83,7 @@ Options Detail:
 | hints            | false    | {}      | Object           | placeholder hints                                  |
 | defaultOpenDepth | false    | 1       | Number           | max default open depth                             |
 | keyNameQuote     | false    | double  | Boolean / String | The key name quote ,value: false / single / double |
-| valueNameQuote   | false    | double  | String           | The key name quote , value:  single / double       |
+| valueNameQuote   | false    | double  | String           | The value name quote , value:  single / double       |
 
 
 
@@ -91,7 +91,7 @@ Options Detail:
 
 > custom  your theme colors ( key / value)
 
-~~~json
+~~~js
   styles: { // Text color
     key: { // key text color
       string: '#555',
@@ -112,7 +112,7 @@ Options Detail:
 
 > set placeholder at collapse
 
-~~~json
+~~~js
 hints: { // Prompt when folding word
     array: ['item', 'items'],
     object: ['property', 'propertys']
